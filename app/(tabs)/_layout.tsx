@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Home, Heart, User } from 'lucide-react-native';
+import { Hop as Home, Heart, User } from 'lucide-react-native';
 import { useLanguage } from '@/lib/i18n';
 import { t } from '@/lib/translations';
 
