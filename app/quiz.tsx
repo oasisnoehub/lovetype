@@ -4,9 +4,13 @@ import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { quizQuestions } from '@/lib/quiz-data';
+import { useLanguage } from '@/lib/i18n';
+import { t } from '@/lib/translations';
+import { quizQuestionsTranslations } from '@/lib/quiz-translations';
 
 export default function QuizScreen() {
   const router = useRouter();
+  const { language } = useLanguage();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, 'A' | 'B'>>({});
 
@@ -57,8 +61,10 @@ export default function QuizScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.questionNumber}>Question {currentQuestion + 1}</Text>
-        <Text style={styles.questionText}>{question.question}</Text>
+        <Text style={styles.questionNumber}>{t('quiz.question', language)} {currentQuestion + 1}</Text>
+        <Text style={styles.questionText}>
+          {quizQuestionsTranslations[question.id].question[language]}
+        </Text>
 
         <View style={styles.optionsContainer}>
           {question.options.map((option) => (
@@ -84,7 +90,9 @@ export default function QuizScreen() {
                     styles.optionText,
                     answers[question.id] === option.value && styles.optionTextSelected,
                   ]}>
-                  {option.text}
+                  {option.value === 'A'
+                    ? quizQuestionsTranslations[question.id].optionA[language]
+                    : quizQuestionsTranslations[question.id].optionB[language]}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -103,7 +111,7 @@ export default function QuizScreen() {
             end={{ x: 1, y: 0 }}
             style={styles.nextButtonGradient}>
             <Text style={styles.nextButtonText}>
-              {isLastQuestion ? 'View Results' : 'Next'}
+              {isLastQuestion ? t('quiz.view_results', language) : t('quiz.next', language)}
             </Text>
             {!isLastQuestion && <ChevronRight size={20} color="#fff" />}
           </LinearGradient>

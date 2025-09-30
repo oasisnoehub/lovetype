@@ -6,9 +6,12 @@ import { Heart, CircleCheck as CheckCircle, Users, Sparkles } from 'lucide-react
 import { calculateLoveType } from '@/lib/quiz-calculator';
 import { supabase } from '@/lib/supabase';
 import { LoveTypeDescription } from '@/types/love-type';
+import { useLanguage } from '@/lib/i18n';
+import { t } from '@/lib/translations';
 
 export default function ResultScreen() {
   const router = useRouter();
+  const { language } = useLanguage();
   const params = useLocalSearchParams();
   const [loveType, setLoveType] = useState<LoveTypeDescription | null>(null);
   const [loading, setLoading] = useState(true);
@@ -56,7 +59,7 @@ export default function ResultScreen() {
         style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#FF6B9D" />
-          <Text style={styles.loadingText}>Calculating your love type...</Text>
+          <Text style={styles.loadingText}>{t('quiz.calculating', language)}</Text>
         </View>
       </LinearGradient>
     );
@@ -86,7 +89,7 @@ export default function ResultScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
           <Heart size={64} color="#FF6B9D" />
-          <Text style={styles.yourType}>Your Love Type</Text>
+          <Text style={styles.yourType}>{t('result.your_type', language)}</Text>
           <View style={styles.codeContainer}>
             <Text style={styles.code}>{loveType.code}</Text>
           </View>
@@ -101,7 +104,7 @@ export default function ResultScreen() {
           <View style={styles.card}>
             <View style={styles.sectionHeader}>
               <Sparkles size={24} color="#FF6B9D" />
-              <Text style={styles.sectionTitle}>Key Characteristics</Text>
+              <Text style={styles.sectionTitle}>{t('result.key_characteristics', language)}</Text>
             </View>
             {loveType.characteristics.map((char, index) => (
               <View key={index} style={styles.listItem}>
@@ -116,7 +119,7 @@ export default function ResultScreen() {
           <View style={styles.card}>
             <View style={styles.sectionHeader}>
               <CheckCircle size={24} color="#FF6B9D" />
-              <Text style={styles.sectionTitle}>Your Strengths</Text>
+              <Text style={styles.sectionTitle}>{t('result.strengths', language)}</Text>
             </View>
             {loveType.strengths.map((strength, index) => (
               <View key={index} style={styles.listItem}>
@@ -131,7 +134,7 @@ export default function ResultScreen() {
           <View style={styles.card}>
             <View style={styles.sectionHeader}>
               <Users size={24} color="#FF6B9D" />
-              <Text style={styles.sectionTitle}>Compatible With</Text>
+              <Text style={styles.sectionTitle}>{t('result.compatible', language)}</Text>
             </View>
             <View style={styles.compatibilityContainer}>
               {loveType.compatibility.map((code, index) => (
@@ -151,7 +154,7 @@ export default function ResultScreen() {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.homeButtonGradient}>
-            <Text style={styles.homeButtonText}>Back to Home</Text>
+            <Text style={styles.homeButtonText}>{t('result.back_home', language)}</Text>
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>

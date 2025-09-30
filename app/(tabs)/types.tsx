@@ -4,8 +4,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Heart, X } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
 import { LoveTypeDescription } from '@/types/love-type';
+import { useLanguage } from '@/lib/i18n';
+import { t } from '@/lib/translations';
 
 export default function TypesScreen() {
+  const { language } = useLanguage();
   const [types, setTypes] = useState<LoveTypeDescription[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedType, setSelectedType] = useState<LoveTypeDescription | null>(null);
@@ -48,8 +51,8 @@ export default function TypesScreen() {
       style={styles.container}>
       <View style={styles.header}>
         <Heart size={32} color="#FF6B9D" />
-        <Text style={styles.title}>16 Love Types</Text>
-        <Text style={styles.subtitle}>Explore all personality types</Text>
+        <Text style={styles.title}>{t('types.title', language)}</Text>
+        <Text style={styles.subtitle}>{t('types.subtitle', language)}</Text>
       </View>
 
       <FlatList
@@ -102,7 +105,7 @@ export default function TypesScreen() {
 
                   {item.characteristics && item.characteristics.length > 0 && (
                     <View style={styles.modalCard}>
-                      <Text style={styles.modalSectionTitle}>Key Characteristics</Text>
+                      <Text style={styles.modalSectionTitle}>{t('result.key_characteristics', language)}</Text>
                       {item.characteristics.map((char, index) => (
                         <View key={index} style={styles.modalListItem}>
                           <View style={styles.bullet} />
@@ -114,7 +117,7 @@ export default function TypesScreen() {
 
                   {item.strengths && item.strengths.length > 0 && (
                     <View style={styles.modalCard}>
-                      <Text style={styles.modalSectionTitle}>Strengths</Text>
+                      <Text style={styles.modalSectionTitle}>{t('result.strengths', language)}</Text>
                       {item.strengths.map((strength, index) => (
                         <View key={index} style={styles.modalListItem}>
                           <View style={styles.bullet} />
@@ -126,7 +129,7 @@ export default function TypesScreen() {
 
                   {item.compatibility && item.compatibility.length > 0 && (
                     <View style={styles.modalCard}>
-                      <Text style={styles.modalSectionTitle}>Compatible With</Text>
+                      <Text style={styles.modalSectionTitle}>{t('result.compatible', language)}</Text>
                       <View style={styles.compatibilityContainer}>
                         {item.compatibility.map((code, index) => (
                           <View key={index} style={styles.compatibilityTag}>

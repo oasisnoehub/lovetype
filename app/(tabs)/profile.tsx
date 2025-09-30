@@ -5,8 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { User, Clock, Heart } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
 import { QuizResult } from '@/types/love-type';
+import { useLanguage } from '@/lib/i18n';
+import { t } from '@/lib/translations';
 
 export default function ProfileScreen() {
+  const { language } = useLanguage();
   const [results, setResults] = useState<QuizResult[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -63,15 +66,15 @@ export default function ProfileScreen() {
       style={styles.container}>
       <View style={styles.header}>
         <User size={32} color="#FF6B9D" />
-        <Text style={styles.title}>Quiz History</Text>
-        <Text style={styles.subtitle}>Your past results</Text>
+        <Text style={styles.title}>{t('profile.title', language)}</Text>
+        <Text style={styles.subtitle}>{t('profile.subtitle', language)}</Text>
       </View>
 
       {results.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Heart size={48} color="#ccc" />
-          <Text style={styles.emptyText}>No quiz results yet</Text>
-          <Text style={styles.emptySubtext}>Take the quiz to see your love type!</Text>
+          <Text style={styles.emptyText}>{t('profile.no_results', language)}</Text>
+          <Text style={styles.emptySubtext}>{t('profile.take_quiz', language)}</Text>
         </View>
       ) : (
         <FlatList

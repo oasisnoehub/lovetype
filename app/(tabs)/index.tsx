@@ -2,49 +2,56 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Heart, Sparkles } from 'lucide-react-native';
+import { useLanguage } from '@/lib/i18n';
+import { t } from '@/lib/translations';
+import { LanguageSelector } from '@/components/LanguageSelector';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { language } = useLanguage();
 
   return (
     <LinearGradient
       colors={['#FFE5EC', '#FFF0F5', '#FFFFFF']}
       style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.languageSelectorContainer}>
+          <LanguageSelector />
+        </View>
         <View style={styles.header}>
           <Heart size={48} color="#FF6B9D" />
-          <Text style={styles.title}>16 Love Type</Text>
-          <Text style={styles.subtitle}>Discover Your Unique Love Personality</Text>
+          <Text style={styles.title}>{t('home.title', language)}</Text>
+          <Text style={styles.subtitle}>{t('app.subtitle', language)}</Text>
         </View>
 
         <View style={styles.card}>
           <Sparkles size={32} color="#FF6B9D" />
-          <Text style={styles.cardTitle}>What is 16 Love Type?</Text>
+          <Text style={styles.cardTitle}>{t('home.what_is', language)}</Text>
           <Text style={styles.cardText}>
-            Discover your unique approach to relationships through 4 core dimensions that define how you love:
+            {t('home.description', language)}
           </Text>
 
           <View style={styles.dimensionList}>
             <DimensionItem
-              title="Lead / Follow"
-              description="Whether you set the pace or match your partner's rhythm"
+              title={t('dimension.lead_follow', language)}
+              description={t('dimension.lead_follow_desc', language)}
             />
             <DimensionItem
-              title="Cuddly / Accept"
-              description="Whether you prefer giving affection or receiving care"
+              title={t('dimension.cuddly_accept', language)}
+              description={t('dimension.cuddly_accept_desc', language)}
             />
             <DimensionItem
-              title="Realistic / Passionate"
-              description="Whether you value practical love or intense romance"
+              title={t('dimension.realistic_passionate', language)}
+              description={t('dimension.realistic_passionate_desc', language)}
             />
             <DimensionItem
-              title="Optimistic / Earnest"
-              description="Whether you're carefree or deeply serious about love"
+              title={t('dimension.optimistic_earnest', language)}
+              description={t('dimension.optimistic_earnest_desc', language)}
             />
           </View>
 
           <Text style={styles.cardText}>
-            Through 12 carefully crafted questions, we'll identify your combination of these traits and match you to one of 16 distinct love types.
+            {t('home.final_text', language)}
           </Text>
         </View>
 
@@ -56,7 +63,7 @@ export default function HomeScreen() {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.buttonGradient}>
-            <Text style={styles.buttonText}>Start Quiz</Text>
+            <Text style={styles.buttonText}>{t('home.start_quiz', language)}</Text>
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>
@@ -83,6 +90,12 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 24,
     paddingTop: 60,
+  },
+  languageSelectorContainer: {
+    position: 'absolute',
+    top: 16,
+    right: 24,
+    zIndex: 10,
   },
   header: {
     alignItems: 'center',
